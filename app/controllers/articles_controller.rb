@@ -3,6 +3,7 @@ class ArticlesController < ApplicationController
 
   http_basic_authenticate_with name: "atul", password: "atul@12", except: [:index, :show]
 
+  before_action  :validate_and_save  [save]
   def index
     @article = Article.all
   end
@@ -27,6 +28,7 @@ class ArticlesController < ApplicationController
 
   def edit
     @article = Article.find(params[:id])
+
   end
 
   def update
@@ -45,10 +47,15 @@ class ArticlesController < ApplicationController
     redirect_to root_path, status: :see_other
     #redirect_to root_path, status: :see_other
   end
+  def validate_and_save
+    puts "you are succesfully  update your article "
+  end
+
 
   private
   def article_params
-    params.require(:article).permit(:title ,:body, :status)
+    params.require(:article).permit( :title , :body )
   end
 end
+
 
